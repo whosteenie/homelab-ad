@@ -10,16 +10,16 @@ user management, group policy, and domain administration.
 Host: Windows 11 Pro, 32GB DDR5  
 Hypervisor: Hyper-V  
 Domain Controller: Windows Server 2025 Standard Evaluation  
-Client VMs: Windows 11 Enterprise Evaluation
+Client VMs: Windows 11 Enterprise Evaluation  
 
 ## Topology
 
-DC01 - Windows Server 2025 (Domain Controller, DNS Server)
-  IP: 192.168.100.1
-  Domain: lab.local
+DC01 - Windows Server 2025 (Domain Controller, DNS Server)  
+  IP: 192.168.100.1  
+  Domain: lab.local  
 
-Client01 - Windows 11 Enterprise (domain joined)
-  IP: 192.168.100.10
+Client01 - Windows 11 Enterprise (domain joined)  
+  IP: 192.168.100.10  
 
 ---
 
@@ -62,12 +62,19 @@ assign access to the group rather than individual accounts.
 ### Group Policy
 
 Created a GPO called IT Policy and linked it to the IT OU. Configured a policy
-to prevent users from changing the desktop background.
+to prevent users from changing the desktop background. The policy lives under
+User Configuration → Policies → Administrative Templates → Control Panel →
+Personalization → Prevent changing desktop background.
 
 <p align="center">
   <img src="screenshots/gpm-ou-policy.png" alt="Group Policy Management showing IT Policy linked to IT OU"/>
 </p>
 <p align="center"><em>IT Policy linked to the IT OU in Group Policy Management</em></p>
+
+<p align="center">
+  <img src="screenshots/gpo-policy-setting.png" alt="Group Policy setting to prevent changing desktop background"/>
+</p>
+<p align="center"><em>GPO setting configured to prevent users from changing the desktop background</em></p>
 
 ---
 
