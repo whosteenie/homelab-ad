@@ -56,12 +56,21 @@ Created two user accounts in the IT OU for testing and policy verification.
 - jsmith (John Smith)
 - jdoe (Jane Doe)
 
+### Groups
+
+Created a Global Security Group called IT Staff in the IT OU and added both
+users as members. Grouping users this way makes permission management cleaner
+since you assign access to the group rather than individual accounts.
+
+![Users and IT Staff group in Active Directory Users and Computers](screenshots/ad-users-groups.png)
+Users and IT Staff group inside the IT OU
+
 ### Group Policy
 
 Created a GPO called IT Policy and linked it to the IT OU. Configured a policy
 to prevent users from changing the desktop background.
 
-![Group Policy Management showing IT Policy linked to IT OU](screenshots/GPM-ITPolicy.png)
+![Group Policy Management showing IT Policy linked to IT OU](screenshots/gpm-ou-policy.png)
 
 ---
 
