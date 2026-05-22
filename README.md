@@ -37,33 +37,25 @@ it acts as the DNS server for the domain.
 
 ### Organizational Units
 
-Created two OUs at the domain root to keep users and computers separate.
-This makes it easier to apply Group Policy independently to each.
+Created two OUs at the domain root to keep users and computers separate,
+making it easier to apply Group Policy independently to each.
 
 - IT
 - Workstations
 
-### Groups
-
-Created a Global Security Group called IT Staff in the IT OU and added both
-users as members. Grouping users this way makes permission management cleaner
-since you assign access to the group rather than individual accounts.
-
-### Users
+### Users and Groups
 
 Created two user accounts in the IT OU for testing and policy verification.
 
 - jsmith (John Smith)
 - jdoe (Jane Doe)
 
-### Groups
-
-Created a Global Security Group called IT Staff in the IT OU and added both
-users as members. Grouping users this way makes permission management cleaner
-since you assign access to the group rather than individual accounts.
+Both accounts were added to a Global Security Group called IT Staff.
+Grouping users this way makes permission management cleaner since you
+assign access to the group rather than individual accounts.
 
 ![Users and IT Staff group in Active Directory Users and Computers](screenshots/ad-users-groups.png)
-Users and IT Staff group inside the IT OU
+*Users and IT Staff group inside the IT OU*
 
 ### Group Policy
 
@@ -71,6 +63,7 @@ Created a GPO called IT Policy and linked it to the IT OU. Configured a policy
 to prevent users from changing the desktop background.
 
 ![Group Policy Management showing IT Policy linked to IT OU](screenshots/gpm-ou-policy.png)
+*IT Policy linked to the IT OU in Group Policy Management*
 
 ---
 
@@ -81,12 +74,14 @@ Set a static IP of 192.168.100.10 with the DC as the default gateway and DNS
 server. Verified connectivity to DC01 via ping before joining the domain.
 
 ![Ping from Client01 to DC01 showing successful connectivity](screenshots/ping.png)
+*Successful ping from Client01 to DC01 confirming network connectivity*
 
 Joined Client01 to lab.local through System Properties using domain admin
 credentials. After rebooting, logged in as LAB\jsmith and confirmed the
 domain user profile was created and Group Policy applied correctly.
 
 ![jsmith logged in as a domain user with background policy enforced](screenshots/GPO-background.png)
+*jsmith logged in as a domain user with the background policy enforced*
 
 The background settings page shows "Some of these settings are managed
 by your organization" and the options are grayed out, confirming the
@@ -97,6 +92,6 @@ GPO is applying as expected.
 ## What's Next
 
 - Create additional GPOs (password policy, drive mapping, software restriction)
-- Add Client01 computer account to the Workstations OU
+- Move Client01 computer account into the Workstations OU
 - Practice user account management (disable, unlock, reset password)
 - Explore PowerShell for AD administration
