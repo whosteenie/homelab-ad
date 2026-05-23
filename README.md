@@ -66,9 +66,7 @@ assign access to the group rather than individual accounts.
 ### Group Policy
 
 Created a GPO called IT Policy and linked it to the IT OU. Configured a policy
-to prevent users from changing the desktop background. The setting is under
-User Configuration, Policies, Administrative Templates, Control Panel,
-Personalization, Prevent changing desktop background.
+to prevent users from changing the desktop background.
 
 <p align="center">
   <img src="screenshots/gpm-ou-policy.png" alt="Group Policy Management showing IT Policy linked to IT OU"/>
@@ -110,14 +108,7 @@ GPO is applying as expected.
 
 ## Microsoft Intune Enrollment
 
-Extended the lab to include Microsoft Intune for cloud-based endpoint
-management, reflecting how modern enterprise environments manage devices
-alongside on-premises Active Directory in a hybrid model.
-
-Set up a Microsoft Intune trial tenant and enrolled Client01 using the
-manual MDM enrollment path through Settings. The domain admin account
-performed the enrollment since end users do not have device management
-rights, consistent with how enterprise IT handles device provisioning.
+Set up a Microsoft Intune trial tenant and enrolled Client01 manually through Settings using the domain admin account, since end users do not have device management rights. This mirrors how enterprise IT handles device provisioning in hybrid AD and Intune environments.
 
 <p align="center">
   <img src="screenshots/intune-enrolled.png" alt="Client01 Access work or school showing Connected to whostudios MDM and lab.local AD domain"/>
@@ -126,8 +117,7 @@ rights, consistent with how enterprise IT handles device provisioning.
 
 ### Compliance Policy
 
-Created a compliance policy called Lab Compliance Policy targeting Windows
-10 and later devices. The policy enforces the following security requirements:
+Created a compliance policy called 'Lab Compliance Policy' targeting Windows 10 and later devices. The policy enforces the following security requirements:
 
 - BitLocker encryption required
 - Firewall enabled
@@ -140,12 +130,7 @@ Created a compliance policy called Lab Compliance Policy targeting Windows
 </p>
 <p align="center"><em>Lab Compliance Policy configured in Intune</em></p>
 
-After syncing Client01, the device evaluated as non-compliant specifically
-on BitLocker. This is expected since Hyper-V VMs do not have a TPM chip by
-default, which BitLocker requires. All other policy settings evaluated as
-compliant. In a production environment the remediation would be to either
-enable a virtual TPM on the VM, encrypt the drive, or create a compliance
-exception for lab and virtual machines.
+After syncing Client01, the device evaluated as non-compliant specifically on BitLocker. This is expected since BitLocker is not enabled by default on the VM. All other policy settings evaluated as compliant. In a production environment the remediation would be to enable BitLocker on the device or create a compliance exception for lab and virtual machines.
 
 <p align="center">
   <img src="screenshots/intune-compliance-detail.png" alt="Device compliance detail showing BitLocker non-compliant and all other settings compliant"/>
