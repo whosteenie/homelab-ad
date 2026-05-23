@@ -3,7 +3,8 @@
 ## Overview
 
 Home lab built using Hyper-V on Windows 11 Pro to practice Active Directory,
-user management, group policy, and domain administration.
+user management, group policy, domain administration, and Microsoft Intune
+endpoint management.
 
 ## Environment
 
@@ -15,11 +16,11 @@ Client VMs: Windows 11 Enterprise Evaluation
 ## Topology
 
 DC01 - Windows Server 2025 (Domain Controller, DNS Server)  
-  IP: 192.168.100.1  
+  IP: 192.168.100.1 (internal) + DHCP (external, internet access)  
   Domain: lab.local  
 
-Client01 - Windows 11 Enterprise (domain joined)  
-  IP: 192.168.100.10  
+Client01 - Windows 11 Enterprise (domain joined, Intune enrolled)  
+  IP: 192.168.100.10 (internal) + DHCP (external, internet access)  
 
 ---
 
@@ -30,6 +31,9 @@ to keep lab traffic isolated from the host network. Installed the AD DS role
 and promoted the server to a Domain Controller for a new forest at lab.local.
 Set a static IP of 192.168.100.1 with DNS pointing to itself (127.0.0.1) since
 it acts as the DNS server for the domain.
+
+Both VMs were later given a second network adapter connected to an external
+virtual switch to provide internet access for cloud service integration.
 
 ---
 
@@ -104,9 +108,56 @@ GPO is applying as expected.
 
 ---
 
+## Microsoft Intune Enrollment
+
+Extended the lab to include Microsoft Intune for cloud-based endpoint
+management, reflecting how modern enterprise environments manage devices
+alongside on-premises Active Directory in a hybrid model.
+
+Set up a Microsoft Intune trial tenant and enrolled Client01 using the
+manual MDM enrollment path through Settings. The domain admin account
+performed the enrollment since end users do not have device management
+rights — consistent with how enterprise IT handles device provisioning.
+
+<p align="center">
+  <img src="screenshots/intune-enrolled.png" alt="Client01 Access work or school showing Connected to whostudios MDM and lab.local AD domain"/>
+</p>
+<p align="center"><em>Client01 enrolled in Intune MDM alongside the existing AD domain join</em></p>
+
+### Compliance Policy
+
+Created a compliance policy called Lab Compliance Policy targeting Windows
+10 and later devices. The policy enforces the following security requirements:
+
+- BitLocker encryption required
+- Firewall enabled
+- Antivirus enabled
+- Microsoft Defender Antimalware enabled
+- Real-time protection enabled
+
+<p align="center">
+  <img src="screenshots/intune-policy-settings.png" alt="Lab Compliance Policy settings showing BitLocker, Firewall, Antivirus, Defender, and Real-time protection required"/>
+</p>
+<p align="center"><em>Lab Compliance Policy configured in Intune</em></p>
+
+After syncing Client01, the device evaluated as non-compliant specifically
+on BitLocker. This is expected — Hyper-V VMs do not have a TPM chip by
+default, which BitLocker requires. All other policy settings evaluated as
+compliant. In a production environment the remediation would be to either
+enable a virtual TPM on the VM, encrypt the drive, or create a compliance
+exception for lab/virtual machines.
+
+<p align="center">
+  <img src="screenshots/intune-compliance-detail.png" alt="Device compliance detail showing BitLocker non-compliant and all other settings compliant"/>
+</p>
+<p align="center"><em>Policy setting evaluation — BitLocker non-compliant due to no TPM, all other settings compliant</em></p>
+
+---
+
 ## What's Next
 
+- Deploy an application to Client01 via Intune
 - Create additional GPOs (password policy, drive mapping, software restriction)
+- Add PowerShell scripts for AD user and group administration
 - Move Client01 computer account into the Workstations OU
 - Practice user account management (disable, unlock, reset password)
-- Explore PowerShell for AD administration
