@@ -66,9 +66,9 @@ assign access to the group rather than individual accounts.
 ### Group Policy
 
 Created a GPO called IT Policy and linked it to the IT OU. Configured a policy
-to prevent users from changing the desktop background. The policy lives under
-User Configuration → Policies → Administrative Templates → Control Panel →
-Personalization → Prevent changing desktop background.
+to prevent users from changing the desktop background. The setting is under
+User Configuration, Policies, Administrative Templates, Control Panel,
+Personalization, Prevent changing desktop background.
 
 <p align="center">
   <img src="screenshots/gpm-ou-policy.png" alt="Group Policy Management showing IT Policy linked to IT OU"/>
@@ -117,7 +117,7 @@ alongside on-premises Active Directory in a hybrid model.
 Set up a Microsoft Intune trial tenant and enrolled Client01 using the
 manual MDM enrollment path through Settings. The domain admin account
 performed the enrollment since end users do not have device management
-rights — consistent with how enterprise IT handles device provisioning.
+rights, consistent with how enterprise IT handles device provisioning.
 
 <p align="center">
   <img src="screenshots/intune-enrolled.png" alt="Client01 Access work or school showing Connected to whostudios MDM and lab.local AD domain"/>
@@ -141,16 +141,16 @@ Created a compliance policy called Lab Compliance Policy targeting Windows
 <p align="center"><em>Lab Compliance Policy configured in Intune</em></p>
 
 After syncing Client01, the device evaluated as non-compliant specifically
-on BitLocker. This is expected — Hyper-V VMs do not have a TPM chip by
+on BitLocker. This is expected since Hyper-V VMs do not have a TPM chip by
 default, which BitLocker requires. All other policy settings evaluated as
 compliant. In a production environment the remediation would be to either
 enable a virtual TPM on the VM, encrypt the drive, or create a compliance
-exception for lab/virtual machines.
+exception for lab and virtual machines.
 
 <p align="center">
   <img src="screenshots/intune-compliance-detail.png" alt="Device compliance detail showing BitLocker non-compliant and all other settings compliant"/>
 </p>
-<p align="center"><em>Policy setting evaluation — BitLocker non-compliant due to no TPM, all other settings compliant</em></p>
+<p align="center"><em>Policy setting evaluation showing BitLocker non-compliant due to no TPM, all other settings compliant</em></p>
 
 ---
 
