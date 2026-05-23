@@ -150,7 +150,7 @@ exception for lab and virtual machines.
 <p align="center">
   <img src="screenshots/intune-compliance-detail.png" alt="Device compliance detail showing BitLocker non-compliant and all other settings compliant"/>
 </p>
-<p align="center"><em>Policy setting evaluation showing BitLocker non-compliant due to no TPM, all other settings compliant</em></p>
+<p align="center"><em>Policy setting evaluation showing BitLocker non-compliant as it is not enabled on the device, all other settings compliant</em></p>
 
 ---
 
